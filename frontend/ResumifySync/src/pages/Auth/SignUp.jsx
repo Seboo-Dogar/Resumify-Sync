@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
-// import { useNavigate } from 'react-router-dom';
+import React, {useContext, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from '../../utils/helper';
 import ProfilePicSection from '../../components/Inputs/ProfilePicSection';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { UserContext } from '../../context/userContext';
+import { uploadImage } from '../../utils/uploadImage';
 
 const SignUp = ({setCurrentPage}) => {
   const [profilePic, setProfilePic] = useState(null);
@@ -11,10 +15,15 @@ const SignUp = ({setCurrentPage}) => {
   const [password, setPassword] = useState('');
 
   const [error, setError] = useState(null);
-  // const navigate = useNavigate();
+
+  const {updateUser} = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    let profileImageUrl = '';
 
     if(!fullName) {
       setError('Full name is required.');
@@ -32,11 +41,31 @@ const SignUp = ({setCurrentPage}) => {
     }
 
     setError("");
-    // try {
 
-    // }catch (err) {
-    //   console.error(err);
-    // }
+    try {
+      if(profilePic) {
+        const imgageUploadResponse = await uploadImage(profilePic);
+        profileImageUrl = imgageUploadResponse.imageUrl || '';
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, { name: fullName, email, password, profileImageURL: profileImageUrl});
+
+      const {token} = response.data;
+
+      if(token) {
+        localStorage.setItem('token', token);
+        updateUser(response.data);
+        navigate('/dashboard');
+      }
+
+    }catch (err) {
+      console.error("Signup error:", err);
+      if(err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      }else {
+        setError('An error occurred. Please try again.');
+      }
+    }
   }
 
   return (

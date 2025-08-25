@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HeroImg from '../assets/HeroImg.jpg';
 import Modal from '../components/Modal';
 import Login from '../pages/Auth/Login';
@@ -9,18 +9,24 @@ import { UserContext } from '../context/userContext';
 
 function LandingPage() {
   const { user } = useContext(UserContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [openAuthModel, setOpenAuthModel] = useState(false);
   const [currentPage, setCurrentPage] = useState('login');
 
-  const handleCallToAction = () => {}
+  const handleCallToAction = () => {
+    if(!user) {
+      setOpenAuthModel(true);
+    }else if(user) {
+      navigate('/dashboard');
+    }
+  }
 
   return (
     <div className='w-full min-h-full bg-white pb-96'>
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto max-w-7xl px-4 py-6">
         <header className="flex justify-between items-center mb-6">
-          <div className='text-xl font-bold'>Resumify Sync</div>
+          <div className='text-xl md:text-2xl font-bold '>Resumify Sync</div>
 
           {user ? <ProfileInfoCard/> : <button className='bg-purple-100 text-sm font-semibold text-black px-7 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-colors cursor-pointer'
             onClick={() => {
