@@ -11,6 +11,7 @@ import StepProgress from '../../components/StepProgress';
 import ProfileInforForm from './Forms/ProfileInforForm';
 import ContactInfoForm from './Forms/ContactInfoForm';
 import WorkExperienceForm from './Forms/WorkExperienceForm';
+import EducationalDetailsForm from './Forms/EducationalDetailsForm';
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -23,7 +24,7 @@ const EditResume = () => {
   const [openThemeSelector, setOpenThemeSelector] = useState(false);
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState("work-experience");
+  const [currentPage, setCurrentPage] = useState("educational-info");
   const [progress, setProgress] = useState(0);
   const [resumeData, setResumeData] = useState({
     title: "",
@@ -135,7 +136,7 @@ const EditResume = () => {
       case "work-experience":
         return(
           <WorkExperienceForm 
-            workExperience={resumeData.workExperience}
+            workExperience={resumeData?.workExperience}
             updateArrayItem={(index, key, value) => {
               updateArrayItem("workExperience", index, key, value);
             }}
@@ -146,6 +147,22 @@ const EditResume = () => {
               removeArrayItem("workExperience", index);
             }}
             
+          />
+        );
+
+      case "educational-info":
+        return(
+          <EducationalDetailsForm 
+            educationInfo={resumeData?.education}
+            updateArrayItem={(index, key, value) => {
+              updateArrayItem("education", index, key, value);
+            }}
+            addArrayItem={(newItem) => {
+              addArrayItem("education", newItem);
+            }}
+            removeArrayItem={(index) => {
+              removeArrayItem("education", index);
+            }}
           />
         );
 
