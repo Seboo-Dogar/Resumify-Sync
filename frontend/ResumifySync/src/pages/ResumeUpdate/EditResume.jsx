@@ -14,6 +14,7 @@ import WorkExperienceForm from './Forms/WorkExperienceForm';
 import EducationalDetailsForm from './Forms/EducationalDetailsForm';
 import SkillsForm from './Forms/SkillsForm';
 import ProjectsForm from './Forms/ProjectsForm';
+import CertificationsForm from './Forms/CertificationsForm';
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -26,7 +27,7 @@ const EditResume = () => {
   const [openThemeSelector, setOpenThemeSelector] = useState(false);
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState("projects");
+  const [currentPage, setCurrentPage] = useState("certifications");
   const [progress, setProgress] = useState(0);
   const [resumeData, setResumeData] = useState({
     title: "",
@@ -196,6 +197,22 @@ const EditResume = () => {
             }}
             removeArrayItem={(index) => {
               removeArrayItem("projects", index);
+            }}
+          />
+        );
+
+      case "certifications":
+        return(
+          <CertificationsForm 
+            certifications={resumeData?.certifications}
+            updateArrayItem={(index, key, value) => {
+              updateArrayItem("certifications", index, key, value);
+            }}
+            addArrayItem={(newItem) => {
+              addArrayItem("certifications", newItem);
+            }}
+            removeArrayItem={(index) => {
+              removeArrayItem("certifications", index);
             }}
           />
         );
