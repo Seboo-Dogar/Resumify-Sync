@@ -12,6 +12,7 @@ import ProfileInforForm from './Forms/ProfileInforForm';
 import ContactInfoForm from './Forms/ContactInfoForm';
 import WorkExperienceForm from './Forms/WorkExperienceForm';
 import EducationalDetailsForm from './Forms/EducationalDetailsForm';
+import SkillsForm from './Forms/SkillsForm';
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -24,7 +25,7 @@ const EditResume = () => {
   const [openThemeSelector, setOpenThemeSelector] = useState(false);
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState("educational-info");
+  const [currentPage, setCurrentPage] = useState("skills");
   const [progress, setProgress] = useState(0);
   const [resumeData, setResumeData] = useState({
     title: "",
@@ -162,6 +163,22 @@ const EditResume = () => {
             }}
             removeArrayItem={(index) => {
               removeArrayItem("education", index);
+            }}
+          />
+        );
+
+      case "skills":
+        return(
+          <SkillsForm 
+            skills={resumeData?.skills}
+            updateArrayItem={(index, key, value) => {
+              updateArrayItem("skills", index, key, value);
+            }}
+            addArrayItem={(newItem) => {
+              addArrayItem("skills", newItem);
+            }}
+            removeArrayItem={(index) => {
+              removeArrayItem("skills", index);
             }}
           />
         );
