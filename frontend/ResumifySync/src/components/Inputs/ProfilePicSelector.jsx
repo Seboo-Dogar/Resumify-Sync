@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { LuUser, LuUpload , LuTrash  } from "react-icons/lu";
 import Input from './Input';
 
-const ProfilePicSection = ({profilePic, setProfilePic, preview, setPreview}) => {
+const ProfilePicSelector = ({profilePic, setProfilePic, preview, setPreview}) => {
     const inputRef =  useRef(null);
     const [previewURL, setPreviewURL] = useState(null);
 
@@ -69,4 +69,4 @@ const ProfilePicSection = ({profilePic, setProfilePic, preview, setPreview}) => 
   )
 }
 
-export default ProfilePicSection
+export default ProfilePicSelector;

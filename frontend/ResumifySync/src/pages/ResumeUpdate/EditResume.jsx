@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { LuArrowLeft, LuCircleAlert, LuDownload, LuPalette, LuSave, LuTrash2 } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuCircleAlert, LuDownload, LuPalette, LuSave, LuTrash2 } from "react-icons/lu";
 import toast from "react-hot-toast";
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import TitleInput from '../../components/Inputs/TitleInput';
 import { useReactToPrint } from 'react-to-print';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
+import StepProgress from '../../components/StepProgress';
+import ProfileInforForm from './Forms/ProfileInforForm';
+import ContactInfoForm from './Forms/ContactInfoForm';
+import WorkExperienceForm from './Forms/WorkExperienceForm';
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -19,7 +23,7 @@ const EditResume = () => {
   const [openThemeSelector, setOpenThemeSelector] = useState(false);
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState("profile-info");
+  const [currentPage, setCurrentPage] = useState("work-experience");
   const [progress, setProgress] = useState(0);
   const [resumeData, setResumeData] = useState({
     title: "",
@@ -104,19 +108,104 @@ const EditResume = () => {
   const gotoPreviousPage = () => {}
   
   //function to render form
-  const renderForm = () => {}
+  const renderForm = () => {
+    switch(currentPage) {
+      case "profile-info":
+        return(
+          <ProfileInforForm 
+            profileData={resumeData.profileInfo}
+            updateSection={(key, value) => {
+              updateSection("profileInfo", key, value);
+            }}
+            onNext={validateAndNext}
+          />
+        );
+
+      case "contact-info":
+        return(
+          <ContactInfoForm 
+            contactInfo={resumeData.contactInfo}
+            updateSection={(key, value) => {
+              updateSection("contactInfo", key, value);
+            }}
+            onNext={validateAndNext}
+          />
+        );
+
+      case "work-experience":
+        return(
+          <WorkExperienceForm 
+            workExperience={resumeData.workExperience}
+            updateArrayItem={(index, key, value) => {
+              updateArrayItem("workExperience", index, key, value);
+            }}
+            addArrayItem={(newItem) => {
+              addArrayItem("workExperience", newItem);
+            }}
+            removeArrayItem={(index) => {
+              removeArrayItem("workExperience", index);
+            }}
+            
+          />
+        );
+
+      default:
+        return null;
+    }
+  }
 
   //function to update simple nested object (like profileInfo, contactInfo, etc.)
-  const updateSection = (section, key, value) => {}
+  const updateSection = (section, key, value) => {
+    setResumeData((prevState) => ({
+      ...prevState,
+      [section]: {
+        ...prevState[section],
+        [key]: value,
+      }
+    }));
+  }
 
   //function to update array item(like workExperience[0], skills[0], etc.)
-  const updateArrayItem = (section, index, key, value) => {}
+  const updateArrayItem = (section, index, key, value) => {
+    setResumeData((prevState) => {
+      const updatedArray =[...prevState[section]];
+
+      if (key === null){
+        updatedArray[index] = value;
+      } else {
+        updatedArray[index] = {
+          ...prevState[section][index],
+          [key]: value
+        }
+      }
+
+      return {
+        ...prevState,
+        [section]: updatedArray
+      }
+    });
+  }
 
   //function to add array item
-  const addArrayItem = (section) => {}
+  const addArrayItem = (section, newItem) => {
+    setResumeData((prevState) => ({
+      ...prevState,
+      [section]: [...prevState[section], newItem]
+    }))
+  }
 
   //function to remove array item
-  const removeArrayItem = (section, index) => {}
+  const removeArrayItem = (section, index) => {
+    setResumeData((prevState) => {
+      const updatedArray = [...prevState[section]]
+      updatedArray.splice(index, 1);
+
+      return {
+        ...prevState,
+        [section]: updatedArray
+      }
+    })
+  }
 
   //function to fetch resume details by id
   const fetchResumeDetailsById = async () => {
@@ -182,6 +271,55 @@ const EditResume = () => {
             title={resumeData.title}
             setTitle={(value) => setResumeData((prevState) => ({...prevState, title: value}))}
           />
+
+          <div className='flex items-center gap-4'>
+            <button className='btn-small-light' onClick={() => setOpenThemeSelector(true)}>
+              <LuPalette className='text-[16px]'/>
+              <span className='hidden md:block'>Change Theme</span>
+            </button>
+            <button className='btn-small-light' onClick={deleteResume}>
+              <LuTrash2 className='text-[16px]'/>
+              <span className='hidden md:block'>Delete</span>
+            </button>
+            <button className='btn-small-light' onClick={() => setOpenPreviewModal(true)}>
+              <LuDownload className='text-[16px]'/>
+              <span className='hidden md:block'>Preview & Download</span>
+            </button>
+          </div>
+        </div>
+
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+          <div className='bg-white rounded-lg border border-purple-100 overflow-hidden'>
+            <StepProgress progress={progress} />
+            {renderForm()}
+
+            <div className='mx-5'>
+              {errorMsg && (
+                <div className='flex items-center gap-2 text-[11px] font-medium text-amber-600 bg-amber-100 px-2 py-0.5 my-1 rounder'>
+                  <LuCircleAlert className='text-md'/> {errorMsg}
+                </div>
+              )}
+
+              <div className='flex items-end justify-end gap-3 mt-3 mb-5'>
+                <button className='btn-small-light' onClick={gotoPreviousPage} disabled={isLoading}>
+                  <LuArrowLeft className='text-[16px]'/> Back
+                </button>
+                <button className='btn-small-light' onClick={uploadResumeImages} disabled={isLoading}>
+                  <LuSave className='text-[16px]'/>
+                  {isLoading ? "Uploading..." : "Save & Exit"}
+                </button>
+                <button className='btn-small' onClick={validateAndNext} disabled={isLoading}>
+                  {currentPage === "addictionalInfo" && (<LuDownload className='text-[16px]'/>)}
+                  {currentPage === "addictionalInfo" ? "Preview & Download" : "Next"}
+                  {currentPage !== "addictionalInfo" && (<LuArrowLeft className='text-[16px] rotate-180' />)}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className='h-[100vh]' ref={resumeRef}>
+            {/* Resume Template */}
+          </div>
         </div>
       </div>
     </DashboardLayout>

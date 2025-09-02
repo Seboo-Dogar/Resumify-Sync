@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from '../../utils/helper';
-import ProfilePicSection from '../../components/Inputs/ProfilePicSection';
+import ProfilePicSelector from '../../components/Inputs/ProfilePicSelector';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/userContext';
@@ -74,7 +74,7 @@ const SignUp = ({setCurrentPage}) => {
       <p className='text-xs text-slate-700 mt-[5px] mb-6'>Please enter your details to create an account.</p>
 
       <form onSubmit={handleSignUp} className=''>
-        <ProfilePicSection
+        <ProfilePicSector
           profilePic={profilePic}
           setProfilePic={setProfilePic}
         />

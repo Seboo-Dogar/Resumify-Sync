@@ -6,7 +6,7 @@ const DashboardLayout = ({activeMenu, children}) => {
     const {user} = useContext(UserContext);
 
   return (
-    <div>
+    <div className='min-h-screen bg-gray-100/20'>
         <Navbar activeMenu={activeMenu} />
         {user && <div className="container mx-auto py-4">{children}</div>}
     </div>
