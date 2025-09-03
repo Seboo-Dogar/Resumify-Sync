@@ -2,7 +2,7 @@ import React from "react";
 import ProfilePicSelector from "../../../components/Inputs/ProfilePicSelector";
 import Input from "../../../components/Inputs/Input";
 
-const ProfileInforForm = ({ profileData, updateSection }) => {
+const ProfileInfoForm = ({ profileData, updateSection }) => {
   return (
     <div className="px-5 pt-5">
       <h2 className="text-lg  font-semibold text-gray-900">
@@ -56,4 +56,4 @@ const ProfileInforForm = ({ profileData, updateSection }) => {
   );
 };
 
-export default ProfileInforForm;
+export default ProfileInfoForm;
