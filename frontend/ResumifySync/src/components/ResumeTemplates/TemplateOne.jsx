@@ -12,6 +12,7 @@ import ContactInfo from "../ResumeSections/ContactInfo";
 import EducationInfo from "../ResumeSections/EducationInfo";
 import { formatYearMonth } from "../../utils/helper";
 import LanguageSection from "../ResumeSections/LanguageSection";
+import WorkExperience from "../ResumeSections/WorkExperience";
 
 const DEFAULT_THEME = ["#EBFDFF", "#A1F4FD", "#CEFAFE", "#00B8DB", "#4A5565"];
 
@@ -130,7 +131,26 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
                 </div>
             </div>
 
-            <div className="col-span-8 pt-10 mr-10 pb-5"></div>
+            <div className="col-span-8 pt-10 mr-10 pb-5">
+                <div className="">
+                    <Title text="Professional Summary" color={themeColors[1]} />
+                    <p className="text-sm font-medium">{resumeData.profileInfo.summary}</p>
+                </div>
+                <div className="mt-4">
+                    <Title text="Work Experience" color={themeColors[1]} />
+                    {resumeData.workExperience.map((data, index) => (
+                        <WorkExperience
+                            key={`workExperience_${index}`}
+                            company={data.company}
+                            role={data.role}
+                            duration={`${formatYearMonth(data.startDate)} - ${formatYearMonth(data.endDate)}`}
+                            durationColor={themeColors[4]}
+                            description={data.description}
+                            // accentColor={themeColors[3]}
+                        />
+                    ))}
+                </div>
+            </div>
         </div>
     </div>
   );
