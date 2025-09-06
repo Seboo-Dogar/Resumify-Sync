@@ -14,6 +14,7 @@ import { formatYearMonth } from "../../utils/helper";
 import LanguageSection from "../ResumeSections/LanguageSection";
 import WorkExperience from "../ResumeSections/WorkExperience";
 import ProjectInfo from "../ResumeSections/ProjectInfo";
+import SkillSection from "../ResumeSections/SkillSection";
 
 const DEFAULT_THEME = ["#EBFDFF", "#A1F4FD", "#CEFAFE", "#00B8DB", "#4A5565"];
 
@@ -137,6 +138,7 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
                     <Title text="Professional Summary" color={themeColors[1]} />
                     <p className="text-sm font-medium">{resumeData.profileInfo.summary}</p>
                 </div>
+
                 <div className="mt-4">
                     <Title text="Work Experience" color={themeColors[1]} />
                     {resumeData.workExperience.map((data, index) => (
@@ -151,6 +153,7 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
                         />
                     ))}
                 </div>
+
                 <div className="mt-4">
                     <Title text="Projects" color={themeColors[1]} />
                     {resumeData.projects.map((data, index) => (
@@ -164,8 +167,17 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
                         />
                     ))}
                 </div>
+
+                <div className="mt-4">
+                    <Title text="Skills" color={themeColors[1]} />
+                    <SkillSection 
+                        skills={resumeData.skills}
+                        accentColor={themeColors[3]}
+                        bgColor={themeColors[2]}
+                    />
+                </div>
+
                 
-            </div>
         </div>
     </div>
   );
