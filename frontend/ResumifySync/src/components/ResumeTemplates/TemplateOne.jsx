@@ -11,6 +11,7 @@ import { RiLinkedinLine } from "react-icons/ri";
 import ContactInfo from "../ResumeSections/ContactInfo";
 import EducationInfo from "../ResumeSections/EducationInfo";
 import { formatYearMonth } from "../../utils/helper";
+import LanguageSection from "../ResumeSections/LanguageSection";
 
 const DEFAULT_THEME = ["#EBFDFF", "#A1F4FD", "#CEFAFE", "#00B8DB", "#4A5565"];
 
@@ -115,6 +116,16 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
                                 duration={`${formatYearMonth(data.startDate)} - ${formatYearMonth(data.endDate)}`}
                             />
                         )) }
+                    </div>
+
+                    <div className="mt-5">
+                        <Title text="Languages" color={themeColors[1]} />
+
+                        <LanguageSection 
+                            languages={resumeData.languages}
+                            accentColor={themeColors[3]}
+                            bgColor={themeColors[2]}
+                        />
                     </div>
                 </div>
             </div>
