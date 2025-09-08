@@ -1,4 +1,5 @@
 import moment from 'moment';
+import html2canvas from 'html2canvas';
 
 export const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -70,4 +71,41 @@ export const getLightColorFromImage = (imageUrl) => {
 //formate year months  Eg: Mar 2025
 export function formatYearMonth(yearMonth){
     return yearMonth ? moment(yearMonth, "YYYY-MM").format("MMM YYYY") : "";
+}
+
+export const fixTailwindColors = (element) => {
+    const elements = element.querySelectorAll("*");
+
+    elements.forEach((element) => {
+        const style = window.getComputedStyle(element);
+
+        ["color", "backgroundColor", "borderColor"].forEach((property) => {
+            const value = style[property];
+
+            if (value.includes("oklch")) {
+                element.style[property] = "#000000"; 
+            }
+        });
+    });
+}
+
+
+export async function captureElementAsImage(element) {
+    if(!element) throw new Error("No element provided");
+
+    const canvas = await html2canvas(element);
+    return canvas.toDataURL("image/png");
+}
+
+
+export const dataURLtoFile = (dataurl, filename) => {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime }); 
 }

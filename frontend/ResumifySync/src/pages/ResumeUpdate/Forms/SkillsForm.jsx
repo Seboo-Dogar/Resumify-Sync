@@ -13,8 +13,8 @@ const SkillsForm = ({skills, updateArrayItem, addArrayItem, removeArrayItem}) =>
           <div className='border border-gray-200/80 p-4 rounded-lg relative' key={index}>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <Input
-                value={skill?.skill || ""}
-                onChange={({ target }) => updateArrayItem(index, "skill", target.value)}
+                value={skill?.name || ""}
+                onChange={({ target }) => updateArrayItem(index, "name", target.value)}
                 label="Skill Name"
                 placeholder="React JS"
                 type="text"

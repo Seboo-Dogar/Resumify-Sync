@@ -28,8 +28,8 @@ const createResume = async (req, res) => {
             },
             workExperience: [
                 {
-                    company: '',
-                    role: '',
+                    companyName: '',
+                    jobTitle: '',
                     startDate: '',
                     endDate: '',
                     description: '',

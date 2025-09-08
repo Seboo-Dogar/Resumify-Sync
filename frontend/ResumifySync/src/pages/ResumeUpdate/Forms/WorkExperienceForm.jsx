@@ -12,16 +12,16 @@ const WorkExperienceForm = ({workExperience, updateArrayItem, addArrayItem, remo
                 <div className='border border-gray-200/80 p-4 rounded-lg relative' key={index}>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <Input
-                            value={experience?.company || ""}
-                            onChange={({ target }) => updateArrayItem(index, "company", target.value)}
+                            value={experience?.companyName || ""}
+                            onChange={({ target }) => updateArrayItem(index, "companyName", target.value)}
                             label="Company"
                             placeholder="XYZ Corporation"
                             type="text"
                         />
 
                         <Input
-                            value={experience?.role || ""}
-                            onChange={({ target }) => updateArrayItem(index, "role", target.value)}
+                            value={experience?.jobTitle || ""}
+                            onChange={({ target }) => updateArrayItem(index, "jobTitle", target.value)}
                             label="Position"
                             placeholder="Software Engineer"
                             type="text"
@@ -63,7 +63,7 @@ const WorkExperienceForm = ({workExperience, updateArrayItem, addArrayItem, remo
             <button 
                 className='self-start flex items-center gap-2 p-2 px-4 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer' 
                 type='button' 
-                onClick={() => addArrayItem({company: "", role: "", startDate: "", endDate: "", description: ""})}
+                onClick={() => addArrayItem({companyName: "", jobTitle: "", startDate: "", endDate: "", description: ""})}
             >
                 <LuPlus />Add Work Experience
             </button> 

@@ -11,8 +11,8 @@ const ContactInfoForm = ({contactInfo, updateSection}) => {
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className='col-span-2'>
                 <Input
-                    value={contactInfo?.location || ""}
-                    onChange={({ target }) => updateSection("location", target.value)}
+                    value={contactInfo?.address || ""}
+                    onChange={({ target }) => updateSection("address", target.value)}
                     label="Address"
                     placeholder="ABC City, Country"
                     type="text"

@@ -12,8 +12,8 @@ const CertificationsForm = ({ certifications, updateArrayItem, addArrayItem, rem
                 <div className='border border-gray-200/80 p-4 rounded-lg relative' key={index}>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <Input
-                            value={certification?.name || ""}
-                            onChange={({ target }) => updateArrayItem(index, "name", target.value)}
+                            value={certification?.title || ""}
+                            onChange={({ target }) => updateArrayItem(index, "title", target.value)}
                             label="Certification Title"
                             placeholder="AWS Certified Cloud Practitioner"
                             type="text"

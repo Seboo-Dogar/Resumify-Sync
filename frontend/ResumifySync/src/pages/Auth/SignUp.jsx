@@ -74,7 +74,7 @@ const SignUp = ({setCurrentPage}) => {
       <p className='text-xs text-slate-700 mt-[5px] mb-6'>Please enter your details to create an account.</p>
 
       <form onSubmit={handleSignUp} className=''>
-        <ProfilePicSector
+        <ProfilePicSelector
           profilePic={profilePic}
           setProfilePic={setProfilePic}
         />

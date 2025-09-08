@@ -23,7 +23,7 @@ const SkillSection = ({skills, accentColor, bgColor}) => {
         {skills?.map((skill, index) => (
             <SkillInfo 
                 key={`skill_${index}`} 
-                skill={skill.skill} 
+                skill={skill.name} 
                 progress={skill.progress} 
                 accentColor={accentColor} 
                 bgColor={bgColor}

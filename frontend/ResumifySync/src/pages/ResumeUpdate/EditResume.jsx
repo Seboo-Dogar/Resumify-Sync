@@ -25,6 +25,7 @@ import ProjectsForm from "./Forms/ProjectsForm";
 import CertificationsForm from "./Forms/CertificationsForm";
 import AdditionalInfoForm from "./Forms/AdditionalInfoForm";
 import RenderResume from "../../components/ResumeTemplates/RenderResume";
+import { captureElementAsImage, dataURLtoFile, fixTailwindColors } from "../../utils/helper";
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -56,7 +57,7 @@ const EditResume = () => {
     contactInfo: {
       email: "",
       phone: "",
-      location: "",
+      address: "",
       linkedin: "",
       github: "",
       website: "",
@@ -138,17 +139,17 @@ const EditResume = () => {
       case "work-experience": {
         resumeData.workExperience.forEach((item, index) => {
           const {
-            company = "",
-            role = "",
+            companyName = "",
+            jobTitle = "",
             startDate = "",
             endDate = "",
           } = item || {};
 
-          if (!company?.trim())
+          if (!companyName?.trim())
             errors.push(
               `Company is required for work experience ${index + 1}.`
             );
-          if (!role?.trim())
+          if (!jobTitle?.trim())
             errors.push(`Role is required for work experience ${index + 1}.`);
           if (!startDate?.trim())
             errors.push(
@@ -179,9 +180,8 @@ const EditResume = () => {
       }
 
       case "skills":
-        console.log("Skills:", resumeData.skills);
-        resumeData.skills.forEach(({ skill, progress }, index) => {
-          if (!skill.trim())
+        resumeData.skills.forEach(({ name, progress }, index) => {
+          if (!name?.trim())
             errors.push(`Skill name is required for skill ${index + 1}.`);
           if (progress < 1 || progress > 100)
             errors.push(
@@ -199,8 +199,8 @@ const EditResume = () => {
         });
         break;
 
-      case "certification":
-        resumeData.certification.forEach(({ title, issuer }, index) => {
+      case "certifications":
+        resumeData.certifications.forEach(({ title, issuer }, index) => {
           if (!title.trim())
             errors.push(
               `Certification title is required for certification ${index + 1}.`
@@ -511,7 +511,70 @@ const EditResume = () => {
   };
 
   //function to upload resume images/Thumbnail and profile image
-  const uploadResumeImages = async () => {};
+  const uploadResumeImages = async () => {
+    try {
+      setIsLoading(true);
+
+      fixTailwindColors(resumeRef.current);
+      const imageDataUrl = await captureElementAsImage(resumeRef.current);
+
+      const thumbnailFile = dataURLtoFile(imageDataUrl, `resume-${resumeId}.png`);
+
+      const profileImageFile = resumeData?.profileInfo?.profileImg || null;
+
+      const thumbnailFormData = new FormData();
+      if(profileImageFile) thumbnailFormData.append("profileImage", profileImageFile);
+      if(thumbnailFile) thumbnailFormData.append("thumbnail", thumbnailFile);
+
+      const uploadResponse = await axiosInstance.put(
+        API_PATHS.RESUME.UPLOAD_IMAGES(resumeId),
+        thumbnailFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const { thumbnailLink, profilePreviewUrl } = uploadResponse.data;
+
+      console.log("RESUME_DATA____", resumeData);
+
+      // Call second API to update other resume data 
+      await updateResumeDetails(thumbnailLink, profilePreviewUrl);
+
+      toast.success("Resume updated successfully");
+      navigate("/dashboard");
+
+    }catch (error) {
+      console.log("Error uploading resume images", error);
+      toast.error("Failed to upload images");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateResumeDetails = async (thumbnailLink, profilePreviewUrl) => {
+    try {
+      setIsLoading(true);
+
+      const response = await axiosInstance.put(
+        API_PATHS.RESUME.UPDATE(resumeId),
+        {
+          ...resumeData,
+          thumbnailLink: thumbnailLink || "",
+          profileInfo: {
+            ...resumeData?.profileInfo,
+            profilePreviewUrl: profilePreviewUrl || "",
+          }
+        }
+      );
+    } catch (error) {
+      console.log("Error capturing resume image", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   //function to delete resume
   const deleteResume = async () => {};

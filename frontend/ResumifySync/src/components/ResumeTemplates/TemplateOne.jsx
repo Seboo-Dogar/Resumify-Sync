@@ -91,8 +91,9 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
               <ContactInfo
                 icon={<LuMapPinHouse />}
                 iconBackgroundColor={themeColors[2]}
-                value={resumeData.contactInfo.location}
+                value={resumeData.contactInfo.address}
               />
+
               <ContactInfo
                 icon={<LuMail />}
                 iconBackgroundColor={themeColors[2]}
@@ -166,8 +167,8 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
             {resumeData.workExperience.map((data, index) => (
               <WorkExperience
                 key={`workExperience_${index}`}
-                company={data.company}
-                role={data.role}
+                company={data.companyName}
+                role={data.jobTitle}
                 duration={`${formatYearMonth(
                   data.startDate
                 )} - ${formatYearMonth(data.endDate)}`}
@@ -208,7 +209,7 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
               {resumeData.certifications.map((data, index) => (
                 <CertificationInfo
                   key={`certification_${index}`}
-                  title={data.name}
+                  title={data.title}
                   issuer={data.issuer}
                   year={data.issueDate}
                   bgColor={themeColors[2]}
