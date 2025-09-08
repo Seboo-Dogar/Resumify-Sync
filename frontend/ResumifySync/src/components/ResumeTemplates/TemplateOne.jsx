@@ -224,7 +224,6 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
               <div className="flex items-center flex-wrap gap-3 mt-4">
                   {resumeData.interests.map((interest, index) => {
                       if(!interest) return null;
-
                       return (
                           <div className="text-[10px] font-medium py-1 px-3 rounded-lg" key={`interest_${index}`} style={{ backgroundColor: themeColors[2] }}>
                                 {interest}
