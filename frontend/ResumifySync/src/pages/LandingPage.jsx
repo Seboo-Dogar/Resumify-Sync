@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import HeroImg from '../assets/HeroImg.jpg';
+import HeroImg from '../assets/HeroImg.png';
 import Modal from '../components/Modal';
 import Login from '../pages/Auth/Login';
 import SignUp from '../pages/Auth/SignUp';

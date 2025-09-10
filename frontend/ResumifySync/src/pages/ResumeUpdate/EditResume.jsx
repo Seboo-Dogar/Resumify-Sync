@@ -25,7 +25,13 @@ import ProjectsForm from "./Forms/ProjectsForm";
 import CertificationsForm from "./Forms/CertificationsForm";
 import AdditionalInfoForm from "./Forms/AdditionalInfoForm";
 import RenderResume from "../../components/ResumeTemplates/RenderResume";
-import { captureElementAsImage, dataURLtoFile, fixTailwindColors } from "../../utils/helper";
+import {
+  captureElementAsImage,
+  dataURLtoFile,
+  fixTailwindColors,
+} from "../../utils/helper";
+import ThemeSelector from "./ThemeSelector";
+import Modal from "../../components/Modal";
 
 const EditResume = () => {
   const { resumeId } = useParams();
@@ -518,13 +524,17 @@ const EditResume = () => {
       fixTailwindColors(resumeRef.current);
       const imageDataUrl = await captureElementAsImage(resumeRef.current);
 
-      const thumbnailFile = dataURLtoFile(imageDataUrl, `resume-${resumeId}.png`);
+      const thumbnailFile = dataURLtoFile(
+        imageDataUrl,
+        `resume-${resumeId}.png`
+      );
 
       const profileImageFile = resumeData?.profileInfo?.profileImg || null;
 
       const thumbnailFormData = new FormData();
-      if(profileImageFile) thumbnailFormData.append("profileImage", profileImageFile);
-      if(thumbnailFile) thumbnailFormData.append("thumbnail", thumbnailFile);
+      if (profileImageFile)
+        thumbnailFormData.append("profileImage", profileImageFile);
+      if (thumbnailFile) thumbnailFormData.append("thumbnail", thumbnailFile);
 
       const uploadResponse = await axiosInstance.put(
         API_PATHS.RESUME.UPLOAD_IMAGES(resumeId),
@@ -540,13 +550,12 @@ const EditResume = () => {
 
       console.log("RESUME_DATA____", resumeData);
 
-      // Call second API to update other resume data 
+      // Call second API to update other resume data
       await updateResumeDetails(thumbnailLink, profilePreviewUrl);
 
       toast.success("Resume updated successfully");
       navigate("/dashboard");
-
-    }catch (error) {
+    } catch (error) {
       console.log("Error uploading resume images", error);
       toast.error("Failed to upload images");
     } finally {
@@ -566,7 +575,7 @@ const EditResume = () => {
           profileInfo: {
             ...resumeData?.profileInfo,
             profilePreviewUrl: profilePreviewUrl || "",
-          }
+          },
         }
       );
     } catch (error) {
@@ -586,7 +595,7 @@ const EditResume = () => {
 
   //function to update base width based on resume container size
   const upadateBaseWidth = () => {
-    if(resumeRef.current) {
+    if (resumeRef.current) {
       setBaseWidth(resumeRef.current.offsetWidth);
     }
   };
@@ -695,6 +704,25 @@ const EditResume = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={openThemeSelector}
+        onClose={() => setOpenThemeSelector(false)}
+        title="Change Theme"
+      >
+        <div className="w-[90vw] h-[80vh]">
+          <ThemeSelector
+            selectTheme={resumeData?.template}
+            setSelectedTheme={(value) => {
+              setResumeData((prevState) => ({
+                ...prevState,
+                template: value || prevState?.template,
+              }))
+            }}
+            resumeData={null}
+            onClose={() => setOpenThemeSelector(false)}
+          />
+        </div>
+      </Modal>
     </DashboardLayout>
   );
 };
