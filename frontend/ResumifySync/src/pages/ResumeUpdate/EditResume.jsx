@@ -586,7 +586,18 @@ const EditResume = () => {
   };
 
   //function to delete resume
-  const deleteResume = async () => {};
+  const deleteResume = async () => {
+    try{
+      setIsLoading(true);
+      const  response = await axiosInstance.delete(API_PATHS.RESUME.DELETE(resumeId));
+      toast.success("Resume Deleted Successfully");
+      navigate('/dashboard')
+    } catch(error){
+      console.log("Error capturing Image:", error);
+    }finally {
+      setIsLoading(false);
+    }
+  };
 
   //download resume
   const reactToPrintFn = useReactToPrint({
@@ -720,6 +731,23 @@ const EditResume = () => {
             }}
             resumeData={null}
             onClose={() => setOpenThemeSelector(false)}
+          />
+        </div>
+      </Modal>
+      <Modal
+        isOpen={openPreviewModal}
+        onClose={() => setOpenPreviewModal(false)}
+        title={resumeData.title}
+        showActionBtn
+        actionBtnText="Download"
+        actionBtnIcon={<LuDownload className="text-[16px] "/>}
+        onActionBtnClick={() => reactToPrintFn()}
+      >
+        <div className="w-[98vw] h-[98vw]">
+          <RenderResume 
+            templateId={resumeData?.template?.theme || ""}
+            resumeData={resumeData}
+            colorPalette={resumeData?.template?.colorPalette || []}
           />
         </div>
       </Modal>
