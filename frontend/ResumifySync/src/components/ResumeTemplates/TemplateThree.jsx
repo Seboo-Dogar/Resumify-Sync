@@ -92,50 +92,8 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
           className="col-span-4 py-10"
           style={{ backgroundColor: themeColors[0] }}
         >
-          {/* <div className="flex flex-col items-center px-2">
-            <div
-              className="w-[100px] h-[100px] max-w-[110px] max-h-[110px] rounded-full flex items-center justify-center"
-              style={{ backgroundColor: themeColors[1] }}
-            >
-              {resumeData.profileInfo.profilePreviewUrl ? (
-                <img
-                  src={resumeData.profileInfo.profilePreviewUrl}
-                  className="w-[90px] h-[90px] rounded-full"
-                />
-              ) : (
-                <div
-                  className="w-[90px] h-[90px] rounded-full flex items-center justify-center text-5xl"
-                  style={{ color: themeColors[4] }}
-                >
-                  <LuUser />
-                </div>
-              )}
-            </div>
-            <h2 className="text-xl font-bold mt-3">
-              {resumeData.profileInfo.fullName}
-            </h2>
-            <p className="text-sm text-center">
-              {resumeData.profileInfo.designation}
-            </p>
-          </div> */}
           <div className="my-6 mx-6">
             <div className="flex flex-col gap-4">
-              {/* <ContactInfo
-                icon={<LuMapPinHouse />}
-                iconBackgroundColor={themeColors[2]}
-                value={resumeData.contactInfo.address}
-              />
-
-              <ContactInfo
-                icon={<LuMail />}
-                iconBackgroundColor={themeColors[2]}
-                value={resumeData.contactInfo.email}
-              />
-              <ContactInfo
-                icon={<LuPhone />}
-                iconBackgroundColor={themeColors[2]}
-                value={resumeData.contactInfo.phone}
-              /> */}
 
               {resumeData.contactInfo.linkedin && (
                 <ContactInfo

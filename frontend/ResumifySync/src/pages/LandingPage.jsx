@@ -23,15 +23,14 @@ function LandingPage() {
   }
 
   return (
-    <div className='w-full min-h-full bg-white pb-96'>
-      <div className="container mx-auto max-w-7xl px-4 py-6">
+    <div className='w-full min-h-full bg-white'>
+      <div className="container mx-auto max-w-7xl py-5">
         <header className="flex justify-between items-center mb-6">
           <div className='text-xl md:text-2xl font-bold '>Resumify Sync</div>
 
           {user ? <ProfileInfoCard/> : <button className='bg-purple-100 text-sm font-semibold text-black px-7 py-2.5 rounded-lg hover:bg-gray-800 hover:text-white transition-colors cursor-pointer'
             onClick={() => {
               setOpenAuthModel(true);
-              // setCurrentPage('login');
             }
           }
           >Login / SignUp
