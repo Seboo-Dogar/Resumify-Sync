@@ -77,7 +77,7 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                 <h2 className="text-2xl font-bold">{resumeData.profileInfo.fullName}</h2>
                 <p className="text-[15px] font-semibold mb-2">{resumeData.profileInfo.designation}</p>
 
-                <ContactInfo icon={<LuMapPinHouse/>} iconBG={themeColors[2]} value={resumeData.contactInfo.location} />
+                <ContactInfo icon={<LuMapPinHouse/>} iconBG={themeColors[2]} value={resumeData.contactInfo.address} />
               </div>
               <div className="col-span-6 flex flex-col gap-5 mt-2">
                 <ContactInfo icon={<LuMail />} iconBG={themeColors[2]} value={resumeData.contactInfo.email} />

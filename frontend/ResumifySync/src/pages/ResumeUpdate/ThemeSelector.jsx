@@ -22,6 +22,7 @@ const ThemeSelector = ({selectTheme, setSelectedTheme, resumeData, onClose}) => 
         colors: selectTheme?.colorPalette,
         index: -1,
     });
+    
     const [selectedTemplate, setSelectedTemplate] = useState({
         theme: selectTheme?.theme || "",
         index: -1,
@@ -45,6 +46,10 @@ const ThemeSelector = ({selectTheme, setSelectedTheme, resumeData, onClose}) => 
     useEffect(() => {
         upadateBaseWidth();
         window.addEventListener("resize", upadateBaseWidth);
+
+        return () => {
+            window.removeEventListener("resize", upadateBaseWidth);
+        };
     },[])
 
   return (
@@ -86,7 +91,7 @@ const ThemeSelector = ({selectTheme, setSelectedTheme, resumeData, onClose}) => 
                             templateId={selectedTemplate?.theme || ""}
                             colorPalette={selectedColorPalette?.colors || []}
                             resumeData={resumeData || DUMMY_RESUME_DATA}
-                            baseWidth={baseWidth}
+                            containerWidth={baseWidth}
                         />
                 </div>
             </div>
@@ -100,12 +105,14 @@ const ColorPalette = ({colors, isSelected, onSelect}) => {
     return(
         <div className={`h-28 bg-purple-50 flex rounded-lg overflow-hidden border-2 ${
             isSelected ? "border-purple-500" : "border-none"
-        }`}>
+        }`}
+        onClick={onSelect}
+        >
             {colors.map((color, index) => (
                 <div className='flex-1'
                     key={`color_${index}`}
-                    style={{backgroundColor: color[index]}}
-                    onClick={onSelect}
+                    style={{backgroundColor: color}}
+                    
                 ></div>
             ))}
         </div>
