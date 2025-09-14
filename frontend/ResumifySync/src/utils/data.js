@@ -47,40 +47,40 @@ export const DUMMY_RESUME_DATA = {
     fullName: "John Doe",
     designation: "Senior Software Engineer",
     summary:
-      "Passionate and results-driven developer with 6+ years of experience building frontend websites.",
+      "Passionate and results-driven developer with 6+ years of experience building frontend websites. I am a skilled problem solver and a team player who thrives in collaborative environments. Let's work together to create exceptional digital experiences!",
   },
   contactInfo: {
     email: "john.doe@example.com",
     phone: "+1234567890",
-    location: "#12 Anywhere, Any City, Any Country",
+    address: "#12 Anywhere, Any City, Any Country",
     linkedin: "https://linkedin.com/in/username",
     github: "https://github.com/username",
     website: "https://examplewebsite.com",
   },
   workExperience: [
     {
-      company: "Tech Solutions",
-      role: "Senior Frontend Engineer",
+      companyName: "Tech Solutions",
+      jobTitle: "Senior Frontend Engineer",
       startDate: "2022-03",
       endDate: "2025-04",
       description:
-        "Leading the frontend team to build scalable enterprise applications using React",
+        "Leading the frontend team to build scalable enterprise applications using React and Next.js with a focus on performance optimization and accessibility. Collaborated with cross-functional teams to deliver high-quality web solutions",
     },
     {
-      company: "Coding Dev",
-      role: "Full Stack Developer",
+      companyName: "Coding Dev",
+      jobTitle: "Full Stack Developer",
       startDate: "2020-01",
       endDate: "2022-02",
       description:
-        "Worked on cross-functional teams developing full-stack solutions with React,",
+        "Worked on cross-functional teams developing full-stack solutions with React, Node.js, and MongoDB. Collaborated with cross-functional teams to deliver high-quality web solutions and mobile apps using React Native and Flutter",
     },
     {
-      company: "Startup Company",
-      role: "Junior Web Developer",
+      companyName: "Startup Company",
+      jobTitle: "Junior Web Developer",
       startDate: "2018-06",
       endDate: "2019-12",
       description:
-        "Built responsive websites for startups and small businesses. Maintained lega",
+        "Built responsive websites for startups and small businesses. Maintained lega codebases using Git and GitHub. Collaborated with cross-functional teams to deliver high-quality web solutions",
     },
   ],
   education: [
@@ -115,19 +115,19 @@ export const DUMMY_RESUME_DATA = {
     {
       title: "Project Manager App",
       description:
-        "A task and team management app built with MERN stack. Includes user roles, ro",
+        "A task and team management app built with MERN stack. Includes user roles, authentication, and team management features. Collaborated with cross-functional teams to deliver high-quality web solutions and mobile apps using React Native and Flutter for mobile development.",
       github: "https://github.com/timetoprogram/project-manager-app",
     },
     {
       title: "E-Commerce Platform",
       description:
-        "An e-commerce site built with Next.js and Stripe integration. Supports cart",
+        "An e-commerce site built with Next.js and Stripe integration. Supports cart management, checkout, and payment processing. Collaborated with cross-functional teams to deliver high-quality web solutions and mobile apps using React Native and Flutter for mobile development.",
       liveDemo: "https://ecommerce-demo.timetoprogram.com",
     },
     {
       title: "Blog CMS",
       description:
-        "A custom CMS for blogging using Express and React. Includes WYSIWYG editor",
+        "A custom CMS for blogging using Express and React. Includes WYSIWYG editor, authentication, and user management features. Collaborated with cross-functional teams to deliver high-quality web solutions and mobile apps using React Native and Flutter for mobile development.",
       github: "https://github.com/timetoprogram/blog-cms",
       liveDemo: "https://blogcms.timetoprogram.dev",
     },
@@ -136,12 +136,12 @@ export const DUMMY_RESUME_DATA = {
     {
       title: "Full Stack Web Developer",
       issuer: "Udemy",
-      year: "2023",
+      issueDate: "2023",
     },
     {
       title: "React Advanced Certification",
       issuer: "Coursera",
-      year: "2022",
+      issueDate: "2022",
     },
   ],
   languages: [
@@ -149,5 +149,5 @@ export const DUMMY_RESUME_DATA = {
     { name: "Spanish", progress: 70 },
     { name: "French", progress: 40 },
   ],
-  interests: ["Reading", "Open Source Contribution", "Hiking"],
+  interests: ["Reading", "Open Source Contribution", "Hiking", "Travelling"],
 };
